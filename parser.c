@@ -82,6 +82,7 @@ void parse_file ( char * filename,
   struct matrix * tmp;
   double angle;
   color g;
+  struct stack * s = new_stack();
 
   g.red = 0;
   g.green = 255;
@@ -107,6 +108,9 @@ void parse_file ( char * filename,
       //line[strlen(line)-1]='\0';
       sscanf(line, "%lf %lf %lf %lf %lf %lf", &x, &y, &z, &x1, &y1, &z1);
       add_edge(pm, x, y, z, x1, y1, z1);
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       // printf( "%lf %lf %lf %lf %lf %lf\n", x, y, z, x1, y1, z1);
     }
     else if ( strncmp(line, "circle", strlen(line)) == 0 ) {
@@ -114,6 +118,9 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       add_circle(pm, x, y, z, 0.01);
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       //printf( "%lf %lf %lf\n", x, y, z);
     }    
     else if ( strncmp(line, "bezier", strlen(line)) == 0 ) {
@@ -122,6 +129,9 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf %lf %lf %lf %lf %lf",
 	     &x1, &y1, &x2, &y2, &x3, &y3, &x4, &y4);
       add_curve(pm, x1, y1, x2, y2, x3, y3, x4, y4, 0.01, BEZIER_MODE );
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       //printf( "%lf %lf %lf\n", x, y, z);
     }    
     else if ( strncmp(line, "hermite", strlen(line)) == 0 ) {
@@ -130,24 +140,36 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf %lf %lf %lf %lf %lf",
 	     &x1, &y1, &x2, &y2, &x3, &y3, &x4, &y4);
       add_curve(pm, x1, y1, x2, y2, x3, y3, x4, y4, 0.01, HERMITE_MODE );
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       //printf( "%lf %lf %lf\n", x, y, z);
     }
     else if ( strncmp(line, "box", strlen(line)) == 0 ) {
       fgets(line, 255, f);
       sscanf(line, "%lf %lf %lf %lf %lf %lf", &x, &y, &z, &x1, &y1, &z1);
       add_box(pm, x, y, z, x1, y1, z1);
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       // printf( "%lf %lf %lf %lf %lf %lf\n", x, y, z, x1, y1, z1);
     }
     else if (strncmp(line, "sphere", strlen(line)) == 0 ) {
       fgets(line, 255, f);
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       add_sphere(pm, x, y, z, 10);
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       //printf( "%lf %lf %lf\n", x, y, z);
     }
     else if (strncmp(line, "torus", strlen(line)) == 0 ) {
       fgets(line, 255, f);
       sscanf(line, "%lf %lf %lf %lf", &x, &y, &z, &z1);
       add_torus(pm, x, y, z, z1, 10);
+      matrix_mult(s->data[s->top], pm);
+      draw_lines(pm, s, g);
+      pm->lastcol = 0;
       //printf( "%lf %lf %lf\n", x, y, z);
     }
     else if ( strncmp(line, "scale", strlen(line)) == 0 ) {
