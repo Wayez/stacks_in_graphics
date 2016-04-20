@@ -17,42 +17,24 @@ translate
 0 80 0
 sphere
 0 0 75
-#right arm
+#right ear
 pop
 push
 translate
-85 150 0
+75 150 0
 xrotate
 50
 box
 0 0 20 50 200 40
-#left arm
+#left ear
 pop
 push
 translate
--85 150 0
+-75 150 0
 xrotate
 -50
 box
 -50 0 0 50 200 40
-#right leg
-pop
-push
-translate
-100 -150 0
-xrotate
--20
-box
--60 0 20 60 100 40
-#left leg
-pop
-push
-translate
--100 -150 0
-xrotate
-20
-box
-0 0 20 60 100 40
 display
 save
 quit
