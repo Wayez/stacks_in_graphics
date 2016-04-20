@@ -100,8 +100,13 @@ void parse_file ( char * filename,
     //printf(":%s:\n",line);
     double x, y, z, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4;
    
-    
-    if ( strncmp(line, "line", strlen(line)) == 0 ) {
+    if ( strncmp(line, "push", strlen(line)) == 0 ) {
+      push(s);
+    }
+    else if ( strncmp(line, "pop", strlen(line)) == 0 ) {
+      pop(s);
+    }
+    else if ( strncmp(line, "line", strlen(line)) == 0 ) {
       //      printf("LINE!\n");
       fgets(line, 255, f);
       //      printf("\t%s", line);
